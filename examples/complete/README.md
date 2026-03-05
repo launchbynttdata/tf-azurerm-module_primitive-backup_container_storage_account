@@ -43,5 +43,6 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_backup_container_storage_account_id"></a> [backup\_container\_storage\_account\_id](#output\_backup\_container\_storage\_account\_id) | n/a |
 | <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | n/a |
 <!-- END_TF_DOCS -->

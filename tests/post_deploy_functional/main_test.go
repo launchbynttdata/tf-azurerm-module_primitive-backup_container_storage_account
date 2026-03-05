@@ -22,8 +22,8 @@ import (
 )
 
 const (
-	testConfigsExamplesFolderDefault = "../../examples/basic"
-	infraTFVarFileNameDefault        = "terraform.tfvars"
+	testConfigsExamplesFolderDefault = "../../examples/complete"
+	infraTFVarFileNameDefault        = "test.tfvars"
 )
 
 func TestBackupContainerStorageAccount(t *testing.T) {
@@ -40,5 +40,5 @@ func TestBackupContainerStorageAccount(t *testing.T) {
 		}).
 		Build()
 
-	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestBackupContainerStorageAccount)
+	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestComposableBackupContainerStorageAccount)
 }

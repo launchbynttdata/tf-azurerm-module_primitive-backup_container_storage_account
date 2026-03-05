@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
+func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
 
 	t.Run("validateBackupContainerStorageAccount", func(t *testing.T) {
 
