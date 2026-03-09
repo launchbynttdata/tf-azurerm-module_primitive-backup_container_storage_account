@@ -29,7 +29,7 @@ variable "resource_names_map" {
 
     storage_account = {
       name       = "st"
-      max_length = 24
+      max_length = 80
     }
 
     backup_container_storage_account = {
