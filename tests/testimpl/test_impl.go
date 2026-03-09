@@ -10,7 +10,7 @@ import (
 
 func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
 
-	t.Run("validateBackupContainerStorageAccount", func(t *testing.T) {
+	t.Run("validateBackupContainerStorageAccountExists", func(t *testing.T) {
 
 		backupContainerID := terraform.Output(
 			t,

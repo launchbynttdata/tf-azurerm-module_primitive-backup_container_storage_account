@@ -37,9 +37,9 @@ module "resource_group" {
 }
 
 module "recovery_services_vault" {
-  source  = "terraform.registry.launch.nttdata.com/module_primitive/recovery_services_vault/azurerm"
-  version = "~> 1.0"
-
+  source              = "terraform.registry.launch.nttdata.com/module_primitive/recovery_services_vault/azurerm"
+  version             = "~> 1.0"
+  depends_on          = [module.resource_group]
   name                = module.resource_names["recovery_vault"].standard
   location            = var.location
   resource_group_name = module.resource_group.name
@@ -52,9 +52,9 @@ module "recovery_services_vault" {
 }
 
 module "storage_account" {
-  source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
-  version = "~> 1.0"
-
+  source               = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
+  version              = "~> 1.0"
+  depends_on           = [module.resource_group]
   storage_account_name = substr(replace(module.resource_names["storage_account"].standard, "-", ""), 0, 24)
   resource_group_name  = module.resource_group.name
   location             = var.location
@@ -82,4 +82,9 @@ module "backup_container_storage_account" {
   resource_group_name = module.resource_group.name
   recovery_vault_name = module.recovery_services_vault.vault_name
   storage_account_id  = module.storage_account.id
+
+  depends_on = [
+    module.recovery_services_vault,
+    module.storage_account
+  ]
 }

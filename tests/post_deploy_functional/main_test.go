@@ -26,19 +26,13 @@ const (
 	infraTFVarFileNameDefault        = "test.tfvars"
 )
 
-func TestBackupContainerStorageAccount(t *testing.T) {
+func TestBackupContainerStorageAccountModule(t *testing.T) {
 
 	ctx := types.CreateTestContextBuilder().
 		SetTestConfig(&testimpl.ThisTFModuleConfig{}).
 		SetTestConfigFolderName(testConfigsExamplesFolderDefault).
 		SetTestConfigFileName(infraTFVarFileNameDefault).
-		SetTestSpecificFlags(map[string]types.TestFlags{
-			"complete": {
-				"IS_TERRAFORM_IDEMPOTENT_APPLY": false,
-				"SKIP_TEST":                     true,
-			},
-		}).
 		Build()
 
-	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestComposableBackupContainerStorageAccount)
+	lib.RunSetupTestTeardown(t, *ctx, testimpl.TestComposableBackupContainerStorageAccount)
 }

@@ -45,4 +45,5 @@ No resources.
 |------|-------------|
 | <a name="output_backup_container_storage_account_id"></a> [backup\_container\_storage\_account\_id](#output\_backup\_container\_storage\_account\_id) | n/a |
 | <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | n/a |
+| <a name="output_recovery_vault_name"></a> [recovery\_vault\_name](#output\_recovery\_vault\_name) | n/a |
 <!-- END_TF_DOCS -->
