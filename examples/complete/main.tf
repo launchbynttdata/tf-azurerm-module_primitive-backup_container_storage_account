@@ -55,14 +55,8 @@ module "storage_account" {
   source     = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
   version    = "~> 1.0"
   depends_on = [module.resource_group]
-  storage_account_name = substr(
-    replace(
-      "${module.resource_names["storage_account"].standard}${module.resource_names["storage_account"].random_integer}",
-      "-",
-      ""
-    ),
-    0,
-    24
+  storage_account_name = lower(
+    "${substr(replace(module.resource_names["storage_account"].standard, "-", ""), 0, 14)}${module.resource_names["storage_account"].random_integer}"
   )
   resource_group_name = module.resource_group.name
   location            = var.location
