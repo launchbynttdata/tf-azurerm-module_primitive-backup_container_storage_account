@@ -84,9 +84,4 @@ module "backup_container_storage_account" {
   resource_group_name = module.resource_group.name
   recovery_vault_name = module.recovery_services_vault.vault_name
   storage_account_id  = module.storage_account.id
-
-  depends_on = [
-    module.recovery_services_vault,
-    module.storage_account
-  ]
 }
