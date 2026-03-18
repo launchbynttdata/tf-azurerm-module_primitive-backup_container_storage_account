@@ -68,13 +68,6 @@ module "storage_account" {
   enable_https_traffic_only     = true
   public_network_access_enabled = true
 
-  storage_shares = {
-    fileshare1 = {
-      name  = "testshare"
-      quota = 50
-    }
-  }
-
   tags = merge(var.tags, { resource_name = module.resource_names["storage_account"].standard })
 }
 

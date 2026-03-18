@@ -47,22 +47,28 @@ func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestCon
 		assert.NotEmpty(t, recoveryVaultName)
 		assert.NotEmpty(t, storageAccountID)
 
-		client, err := armrecoveryservicesbackup.NewBackupProtectionContainersClient(
+		client, err := armrecoveryservicesbackup.NewProtectionContainersClient(
 			subscriptionID,
 			cred,
 			nil,
 		)
 		if err != nil {
-			t.Fatalf("Failed to create Backup Protection Containers client: %v", err)
+			t.Fatalf("Failed to create Protection Containers client: %v", err)
 		}
 
-		pager := client.NewListPager(
+		fabricName, containerName := backupContainerPathParts(t, backupContainerID)
+
+		container, err := client.Get(
+			context.Background(),
 			recoveryVaultName,
 			resourceGroupNameFromResourceID(backupContainerID),
+			fabricName,
+			containerName,
 			nil,
 		)
-
-		container := findBackupContainerByID(t, pager, backupContainerID)
+		if err != nil {
+			t.Fatalf("Failed to get backup protection container %q: %v", backupContainerID, err)
+		}
 
 		assert.Equal(t, backupContainerID, *container.ID, "Backup container resource ID mismatch")
 		assert.Contains(
@@ -74,33 +80,6 @@ func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestCon
 	})
 }
 
-func findBackupContainerByID(
-	t *testing.T,
-	pager interface {
-		More() bool
-		NextPage(context.Context) (armrecoveryservicesbackup.BackupProtectionContainersClientListResponse, error)
-	},
-	backupContainerID string,
-) *armrecoveryservicesbackup.ProtectionContainerResource {
-	t.Helper()
-
-	for pager.More() {
-		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatalf("Failed to list backup protection containers: %v", err)
-		}
-
-		for _, container := range page.Value {
-			if container.ID != nil && strings.EqualFold(*container.ID, backupContainerID) {
-				return container
-			}
-		}
-	}
-
-	t.Fatalf("Backup container %q was not found in Azure", backupContainerID)
-	return nil
-}
-
 func resourceGroupNameFromResourceID(resourceID string) string {
 	segments := strings.Split(strings.Trim(resourceID, "/"), "/")
 	for i := 0; i < len(segments)-1; i++ {
@@ -110,6 +89,20 @@ func resourceGroupNameFromResourceID(resourceID string) string {
 	}
 
 	return ""
+}
+
+func backupContainerPathParts(t *testing.T, resourceID string) (string, string) {
+	t.Helper()
+
+	segments := strings.Split(strings.Trim(resourceID, "/"), "/")
+	for i := 0; i < len(segments)-1; i++ {
+		if strings.EqualFold(segments[i], "backupFabrics") && i+2 < len(segments) && strings.EqualFold(segments[i+2], "protectionContainers") && i+3 < len(segments) {
+			return segments[i+1], segments[i+3]
+		}
+	}
+
+	t.Fatalf("Failed to parse backup fabric and protection container name from %q", resourceID)
+	return "", ""
 }
 
 func lastSegment(resourceID string) string {
