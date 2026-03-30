@@ -49,11 +49,11 @@ variable "class_env" {
 }
 
 variable "instance_env" {
-  type = string
+  type = number
 }
 
 variable "instance_resource" {
-  type = string
+  type = number
 }
 
 variable "logical_product_family" {

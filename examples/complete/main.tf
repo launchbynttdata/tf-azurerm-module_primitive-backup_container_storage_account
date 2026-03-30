@@ -37,8 +37,10 @@ module "resource_group" {
 }
 
 module "recovery_services_vault" {
-  source              = "terraform.registry.launch.nttdata.com/module_primitive/recovery_services_vault/azurerm"
-  version             = "~> 1.0"
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/recovery_services_vault/azurerm"
+  version = "~> 1.0"
+  # The resource_group module's name output is an input echo, so Terraform
+  # needs an explicit dependency to wait for resource group creation.
   depends_on          = [module.resource_group]
   name                = module.resource_names["recovery_vault"].standard
   location            = var.location

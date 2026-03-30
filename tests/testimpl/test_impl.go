@@ -14,6 +14,14 @@ import (
 )
 
 func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
+	validateBackupContainerStorageAccount(t, ctx)
+}
+
+func TestReadonlyBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
+	validateBackupContainerStorageAccount(t, ctx)
+}
+
+func validateBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
 	subscriptionID := os.Getenv("ARM_SUBSCRIPTION_ID")
 	if subscriptionID == "" {
 		t.Fatal("ARM_SUBSCRIPTION_ID environment variable is not set")
