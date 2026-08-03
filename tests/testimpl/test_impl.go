@@ -17,7 +17,7 @@ func TestComposableBackupContainerStorageAccount(t *testing.T, ctx types.TestCon
 	validateBackupContainerStorageAccount(t, ctx)
 }
 
-func TestReadonlyBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
+func TestComposableReadonlyBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) {
 	validateBackupContainerStorageAccount(t, ctx)
 }
 
