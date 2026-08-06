@@ -46,8 +46,7 @@ module "recovery_services_vault" {
   location            = var.location
   resource_group_name = module.resource_group.name
 
-  sku                 = "Standard"
-  soft_delete_enabled = true
+  sku = "Standard"
 
   tags = {
     resource_name = module.resource_names["recovery_vault"].standard
