@@ -48,6 +48,9 @@ module "recovery_services_vault" {
 
   sku = "Standard"
 
+  # The CI subscription prevents disabling vault soft delete; keep it enabled so apply succeeds.
+  soft_delete_enabled = true
+
   tags = {
     resource_name = module.resource_names["recovery_vault"].standard
   }
