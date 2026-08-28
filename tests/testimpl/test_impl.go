@@ -33,21 +33,15 @@ func validateBackupContainerStorageAccount(t *testing.T, ctx types.TestContext) 
 	}
 
 	t.Run("validateBackupContainerStorageAccountExists", func(t *testing.T) {
-		backupContainerID := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		backupContainerID := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"backup_container_storage_account_id",
 		)
 
-		recoveryVaultName := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		recoveryVaultName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"recovery_vault_name",
 		)
 
-		storageAccountID := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		storageAccountID := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"storage_account_id",
 		)
 
